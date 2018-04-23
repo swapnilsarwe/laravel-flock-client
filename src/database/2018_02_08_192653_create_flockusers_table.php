@@ -13,7 +13,7 @@ class CreateFlockusersTable extends Migration
      */
     public function up()
     {
-        Schema::create('flock-users', function (Blueprint $table) {
+        Schema::connection('flock-app')->create('flock-users', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('user_id', 64);
