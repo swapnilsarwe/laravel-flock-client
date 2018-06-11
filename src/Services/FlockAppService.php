@@ -109,14 +109,19 @@ class FlockAppService
         }
     }
 
-    public function sendMessage($to, $from, $message) {
+    public function sendMessage($to, $from, $message, $onBehalfOf)
+    {
         $client = new Client();
         $arrQueryParams = [
             'to' => $to,
             'text' => $message,
             'token' => $from
         ];
+        if (!empty($onBehalfOf)) {
+            $arrQueryParams['onBehalfOf'] = $onBehalfOf;
+        }
         $response = $client->get(self::FLOCK_API_URL . '?' . http_build_query($arrQueryParams));
         $response = (string)$response->getBody();
+        return $response;
     }
 }
