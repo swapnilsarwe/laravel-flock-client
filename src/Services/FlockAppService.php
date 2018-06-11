@@ -114,7 +114,7 @@ class FlockAppService
         $arrQueryParams = [
             'to' => $to,
             'text' => $message,
-            'token' => $fromToken
+            'token' => $from
         ];
         $response = $client->get(self::FLOCK_API_URL . '?' . http_build_query($arrQueryParams));
         $response = (string)$response->getBody();
