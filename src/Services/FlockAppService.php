@@ -2,12 +2,15 @@
 
 namespace SwapnilSarwe\LaravelFlockClient\Services;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use SwapnilSarwe\LaravelFlockClient\Repositories\FlockAppRepository;
 
 class FlockAppService
 {
+    const FLOCK_API_URL = 'https://api.flock.co/v1/chat.sendMessage';
+
     private $flockAppRepository;
 
     public function __construct()
@@ -103,8 +106,17 @@ class FlockAppService
 //                  'command' => 'icndb',
                 $callback($eventName, $requestParams);
                 break;
-
-
         }
+    }
+
+    public function sendMessage($to, $from, $message) {
+        $client = new Client();
+        $arrQueryParams = [
+            'to' => $to,
+            'text' => $message,
+            'token' => $fromToken
+        ];
+        $response = $client->get(self::FLOCK_API_URL . '?' . http_build_query($arrQueryParams));
+        $response = (string)$response->getBody();
     }
 }
