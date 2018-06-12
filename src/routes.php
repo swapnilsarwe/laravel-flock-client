@@ -7,6 +7,4 @@
  */
 Route::group(['prefix' => 'flock-app', 'namespace' => 'SwapnilSarwe\LaravelFlockClient\Controllers'], function () {
     Route::get('/', 'FlockAppController@index');
-    Route::post('/event-listener', 'FlockAppController@eventListener');
-    Route::get('/configuration', 'FlockAppController@configuration');
 });

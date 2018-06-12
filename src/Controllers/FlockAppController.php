@@ -9,7 +9,6 @@ use SwapnilSarwe\LaravelFlockClient\Services\FlockAppService;
 
 class FlockAppController extends Controller
 {
-    //
     public function index()
     {
         return ["status" => "OK"];

@@ -13,7 +13,7 @@ class CreateFlockusersTable extends Migration
      */
     public function up()
     {
-        Schema::connection('flock-app')->create('flock-users', function (Blueprint $table) {
+        Schema::connection(config('flock-config.connectionToUse'))->create('flock-users', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('user_id', 64);
@@ -35,6 +35,6 @@ class CreateFlockusersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('flock-users');
+        Schema::connection(config('flock-config.connectionToUse'))->dropIfExists('flock-users');
     }
 }

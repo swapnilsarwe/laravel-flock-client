@@ -13,11 +13,15 @@ class FlockAppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'flock-app');
         $this->loadMigrationsFrom(__DIR__ . '/database');
+
+        
         $this->publishes([
             __DIR__ . '/resources/views' => resource_path('views/vendor/flock-app'),
+        ]);
+        $this->publishes([
+            __DIR__ . '/flock-config.php' => config_path('flock-config.php'),
         ]);
     }
 
@@ -28,7 +32,6 @@ class FlockAppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
         include __DIR__ . '/routes.php';
         $this->app->make('SwapnilSarwe\LaravelFlockClient\Controllers\FlockAppController');
 

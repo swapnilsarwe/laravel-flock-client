@@ -23,45 +23,6 @@ class FlockAppService
         return ["status" => "OK"];
     }
 
-    public function eventListener($request)
-    {
-        Log::debug($request);
-        $eventName = array_get($request, 'name');
-        switch ($eventName) {
-            case "app.install":
-                // on install we get a following details
-//                  'userToken' => '4f1d1fd3-660f-4a8d-abd3-296fc51fc58f',
-//                  'token' => '4f1d1fd3-660f-4a8d-abd3-296fc51fc58f',
-//                  'name' => 'app.install',
-//                  'userId' => 'u:gr8vhto97t4otub2',
-
-                $this->flockAppRepository->install($request);
-
-                break;
-            case "app.uninstall":
-                // on uninstall we get a following details
-//                'name' => 'app.uninstall',
-//                'userId' => 'u:gr8vhto97t4otub2',
-                $this->flockAppRepository->uninstall($request);
-                break;
-
-            case "client.slashCommand":
-                // on slash command we get a following details
-//                'chat' => 'g:2c59ecee6e7f4622b8a0e9f5c6a484d0',
-//                  'name' => 'client.slashCommand',
-//                  'chatName' => 'Swapnil\'s Home',
-//                  'text' => 'Swapnil Sarwe',
-//                  'userName' => 'Swapnil Sarwe',
-//                  'locale' => 'en-us',
-//                  'userId' => 'u:gr8vhto97t4otub2',
-//                  'command' => 'icndb',
-
-                break;
-
-
-        }
-    }
-
     public function configuration(Request $request)
     {
         Log::debug($request);
@@ -79,10 +40,10 @@ class FlockAppService
         switch ($eventName) {
             case "app.install":
                 // on install we get a following details
-//                  'userToken' => '4f1d1fd3-660f-4a8d-abd3-296fc51fc58f',
-//                  'token' => '4f1d1fd3-660f-4a8d-abd3-296fc51fc58f',
+//                  'userToken' => '',
+//                  'token' => '',
 //                  'name' => 'app.install',
-//                  'userId' => 'u:gr8vhto97t4otub2',
+//                  'userId' => '',
 
                 $this->flockAppRepository->install($requestParams);
 
@@ -90,7 +51,7 @@ class FlockAppService
             case "app.uninstall":
                 // on uninstall we get a following details
 //                'name' => 'app.uninstall',
-//                'userId' => 'u:gr8vhto97t4otub2',
+//                'userId' => '',
                 $this->flockAppRepository->uninstall($requestParams);
                 break;
 
@@ -109,7 +70,8 @@ class FlockAppService
         }
     }
 
-    public function sendMessage($to, $from, $message, $onBehalfOf)
+
+    public function sendMessage($to, $from, $message, $onBehalfOf = '')
     {
         $client = new Client();
         $arrQueryParams = [
@@ -120,7 +82,7 @@ class FlockAppService
         if (!empty($onBehalfOf)) {
             $arrQueryParams['onBehalfOf'] = $onBehalfOf;
         }
-        $response = $client->get(self::FLOCK_API_URL . '?' . http_build_query($arrQueryParams));
+        $response = $client->get(config('flock-config.appUrl') . config('flock-config.sendMessageMethod') . '?' . http_build_query($arrQueryParams));
         $response = (string)$response->getBody();
         return $response;
     }
