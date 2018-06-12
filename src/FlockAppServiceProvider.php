@@ -16,12 +16,15 @@ class FlockAppServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'flock-app');
         $this->loadMigrationsFrom(__DIR__ . '/database');
 
-        
+
         $this->publishes([
             __DIR__ . '/resources/views' => resource_path('views/vendor/flock-app'),
         ]);
         $this->publishes([
             __DIR__ . '/flock-config.php' => config_path('flock-config.php'),
+        ]);
+        $this->publishes([
+            __DIR__ . '/database' => database_path('migrations'),
         ]);
     }
 
